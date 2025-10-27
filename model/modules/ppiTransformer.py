@@ -1,13 +1,12 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 class ppiTransformer(nn.Module):
     def __init__(self):
-        super(ppiTransformer, self).__init__()
+        super().__init__()
         
         encoder_layer = nn.TransformerEncoderLayer(d_model=320, nhead=8)
-        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=1)
 
         self.fc = nn.Linear(320, 1)
         self.sigmoid = nn.Sigmoid()
