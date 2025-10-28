@@ -29,3 +29,16 @@ class ppiPredictor(pl.LightningModule):
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_acc", acc, prog_bar=True)
         return loss
+    
+    def test_step(self, batch, batch_idx):
+        emb1, emb2, label = batch
+        preds = self(emb1, emb2)
+        loss = self.criterion(preds.view(-1), label.float().view(-1))
+        acc = ((preds.view(-1) > 0.5) == label.view(-1)).float().mean()
+        self.log("test_loss", loss)
+        self.log("test_acc", acc)
+        return loss
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
+        return optimizer

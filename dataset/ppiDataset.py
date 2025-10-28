@@ -1,11 +1,16 @@
+from pathlib import Path
+
 from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 import torch
 
+
 class ppiDataset(Dataset):
     def __init__(self, data_path):
-        # Load your data from the file
-        self.data = self.load_data(data_path)
+        # Resolve paths once to avoid relying on the current working directory.
+        self.data_path = Path(data_path).expanduser().resolve()
+        self.embedding_dir = self.data_path.parent / "esm_embeddings"
+        self.data = self.load_data(self.data_path)
 
     def load_data(self, data_path):
         # Example: Load data from a CSV file
@@ -20,8 +25,7 @@ class ppiDataset(Dataset):
         protein1_ID = self.data.iloc[idx]['Protein1_ID']
         protein2_ID = self.data.iloc[idx]['Protein2_ID']
         label = self.data.iloc[idx]['Y']
-
-        embedding1 = torch.load(f'../data/esm_embeddings/{protein1_ID}.pt')
-        embedding2 = torch.load(f'../data/esm_embeddings/{protein2_ID}.pt')
+        embedding1 = torch.load(self.embedding_dir / f"{protein1_ID}.pt")
+        embedding2 = torch.load(self.embedding_dir / f"{protein2_ID}.pt")
 
         return embedding1, embedding2, label

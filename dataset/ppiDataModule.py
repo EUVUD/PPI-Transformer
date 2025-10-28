@@ -1,7 +1,7 @@
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
-from ppiDataset import ppiDataset
-from collate_fn import collate_fn
+from dataset.ppiDataset import ppiDataset
+from dataset.collate_fn import collate_fn
 
 class ppiDataModule(pl.LightningDataModule):
     def __init__(self, data_dir: str, batch_size: int = 32):
