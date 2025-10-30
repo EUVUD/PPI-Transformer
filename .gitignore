@@ -2,3 +2,6 @@ dataset/data
 data
 dataset/slurm-51105637.out
 dataset/slurm-*.out
+dataset/__pycache__
+model/__pycache__
+wandb
