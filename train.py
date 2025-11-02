@@ -18,10 +18,10 @@ def train_model():
     wandb_logger.experiment.config.update({
         "learning_rate": 1e-4,
         "batch_size": 32,
-        "epochs": 10
+        "epochs": 1
     })
 
-    trainer = Trainer(max_epochs=10, logger=wandb_logger, accelerator="gpu", devices=1)
+    trainer = Trainer(max_epochs=1, logger=wandb_logger, accelerator="gpu", devices=1)
     trainer.fit(model, datamodule=data_module)
     trainer.test(model, datamodule=data_module)
 

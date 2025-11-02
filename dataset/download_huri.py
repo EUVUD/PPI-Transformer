@@ -3,6 +3,7 @@ from tdc.multi_pred import PPI
 def download_huri():
     data = PPI(name = 'HuRI')
     split = data.get_split()
+    data_neg = data.neg_sample(frac = 1)
 
     # for key in split:
     #     print(key)

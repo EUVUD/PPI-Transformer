@@ -11,10 +11,14 @@ def generate_esm_tokens():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     esm_model = esm_model.to(device)
 
-    data = pd.read_csv('../data/huri_unique_proteins.csv')
+    data = pd.read_csv('../data/huri_neg_unique_proteins.csv')
+
+    prev_data = pd.read_csv('../data/huri_neg_unique_proteins.csv')
 
     for row in data.itertuples(index=False):
         proteinID = row.Protein_ID
+        if proteinID in prev_data['Protein_ID'].values:
+            continue
         sequence = row.Protein
         inputs = tokenizer(sequence, return_tensors='pt', 
                            truncation=True, max_length=1024)

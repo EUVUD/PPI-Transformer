@@ -11,15 +11,21 @@ class ppiDataModule(pl.LightningDataModule):
 
     def setup(self, stage=None):
         # Load your dataset here
-        self.train_dataset = ppiDataset(f'{self.data_dir}/huri_train.csv')
-        self.val_dataset = ppiDataset(f'{self.data_dir}/huri_val.csv')
-        self.test_dataset = ppiDataset(f'{self.data_dir}/huri_test.csv')
+        self.train_dataset = ppiDataset(f'{self.data_dir}/huri_neg_train.csv')
+        self.val_dataset = ppiDataset(f'{self.data_dir}/huri_neg_val.csv')
+        self.test_dataset = ppiDataset(f'{self.data_dir}/huri_neg_test.csv')
 
     def train_dataloader(self):
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, collate_fn=collate_fn, shuffle=True)
+        loader = DataLoader(self.train_dataset, batch_size=self.batch_size, collate_fn=collate_fn, shuffle=True)
+        print(f"train_dataloader created with id={id(loader)}")
+        return loader
 
     def val_dataloader(self):
-        return DataLoader(self.val_dataset, batch_size=self.batch_size, collate_fn=collate_fn)
+        loader = DataLoader(self.val_dataset, batch_size=self.batch_size, collate_fn=collate_fn)
+        print(f"val_dataloader created with id={id(loader)}")
+        return loader
 
     def test_dataloader(self):
-        return DataLoader(self.test_dataset, batch_size=self.batch_size, collate_fn=collate_fn)
+        loader = DataLoader(self.test_dataset, batch_size=self.batch_size, collate_fn=collate_fn)
+        print(f"test_dataloader created with id={id(loader)}")
+        return loader

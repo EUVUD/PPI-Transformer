@@ -2,9 +2,9 @@ import pandas as pd
 
 def generate_unique_protein_list():
 
-    test_df = pd.read_csv('../data/huri_test.csv')
-    val_df = pd.read_csv('../data/huri_val.csv')
-    train_df = pd.read_csv('../data/huri_train.csv')
+    test_df = pd.read_csv('../data/huri_neg_test.csv')
+    val_df = pd.read_csv('../data/huri_neg_val.csv')
+    train_df = pd.read_csv('../data/huri_neg_train.csv')
 
     all_proteins = pd.concat([test_df, val_df, train_df], ignore_index=True)
 
@@ -24,7 +24,7 @@ def generate_unique_protein_list():
     # Drop duplicates
     all_protein_list = all_protein_list.drop_duplicates()
 
-    all_protein_list.to_csv('../data/huri_unique_proteins.csv', index=False)
+    all_protein_list.to_csv('../data/huri_neg_unique_proteins.csv', index=False)
 
 if __name__ == "__main__":
     generate_unique_protein_list()
